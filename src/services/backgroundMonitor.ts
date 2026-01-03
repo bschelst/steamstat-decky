@@ -1,0 +1,140 @@
+import { toaster } from '@decky/api';
+import { FaExclamationTriangle } from 'react-icons/fa';
+import React from 'react';
+import { SteamStatus } from '../../types/types';
+import { DEFAULT_SETTINGS } from '../constants';
+
+// Module-level state for background monitoring
+let monitorInterval: ReturnType<typeof setInterval> | null = null;
+let lastKnownOutageState = false;
+let notificationSentForOutage = false;
+
+// Shared state that UI components can read
+export let lastFetchedStatus: SteamStatus | null = null;
+export let lastFetchTime: number | null = null;
+export let lastFetchError: string | null = null;
+
+async function fetchStatus(): Promise<SteamStatus | null> {
+  // Load settings from localStorage
+  const settingsStr = localStorage.getItem('steamstat_settings');
+  const settings = settingsStr ? { ...DEFAULT_SETTINGS, ...JSON.parse(settingsStr) } : DEFAULT_SETTINGS;
+
+  if (!settings.gateway_url || !settings.gateway_api_key) {
+    lastFetchError = 'Gateway not configured';
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${settings.gateway_url}/api/v1/status`, {
+      method: 'GET',
+      headers: {
+        'X-API-Key': settings.gateway_api_key,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+
+    const data: SteamStatus = await response.json();
+    lastFetchedStatus = data;
+    lastFetchTime = Date.now();
+    lastFetchError = null;
+    return data;
+  } catch (e) {
+    lastFetchError = e instanceof Error ? e.message : 'Failed to fetch status';
+    console.error('Background monitor: Failed to fetch Steam status:', lastFetchError);
+    return null;
+  }
+}
+
+function checkForOutageAndNotify(status: SteamStatus, enableNotifications: boolean): void {
+  const currentServicesDown = Object.values(status.services).some(
+    (svc) => svc.status !== 'online'
+  );
+
+  // Detect state transitions
+  const outageJustStarted = currentServicesDown && !lastKnownOutageState;
+  const outageJustEnded = !currentServicesDown && lastKnownOutageState;
+
+  // Send notification for new outage
+  if (outageJustStarted && !notificationSentForOutage && enableNotifications) {
+    notificationSentForOutage = true;
+
+    const affectedServices = Object.entries(status.services)
+      .filter(([, svc]) => svc.status !== 'online')
+      .map(([name]) => name)
+      .join(', ');
+
+    toaster.toast({
+      title: 'Steam Service Outage',
+      body: `Services affected: ${affectedServices}`,
+      icon: React.createElement(FaExclamationTriangle, { color: '#ff9800' }),
+      duration: 8000,
+      critical: true,
+      playSound: true,
+      showToast: true,
+    });
+  }
+
+  // Send recovery notification
+  if (outageJustEnded && enableNotifications) {
+    notificationSentForOutage = false;
+
+    toaster.toast({
+      title: 'Steam Services Restored',
+      body: 'All Steam services are now online',
+      icon: React.createElement(FaExclamationTriangle, { color: '#4caf50' }),
+      duration: 5000,
+      playSound: true,
+      showToast: true,
+    });
+  }
+
+  // Update last known state
+  lastKnownOutageState = currentServicesDown;
+}
+
+async function monitorTick(): Promise<void> {
+  const settingsStr = localStorage.getItem('steamstat_settings');
+  const settings = settingsStr ? { ...DEFAULT_SETTINGS, ...JSON.parse(settingsStr) } : DEFAULT_SETTINGS;
+
+  const status = await fetchStatus();
+  if (status) {
+    checkForOutageAndNotify(status, settings.enable_notifications);
+  }
+}
+
+export function startBackgroundMonitor(): void {
+  if (monitorInterval) {
+    return; // Already running
+  }
+
+  console.log('Steam Status: Starting background monitor');
+
+  // Initial fetch
+  monitorTick();
+
+  // Set up interval - check every 60 seconds for background monitoring
+  // This is separate from the UI refresh interval
+  const BACKGROUND_CHECK_INTERVAL = 60 * 1000; // 60 seconds
+  monitorInterval = setInterval(monitorTick, BACKGROUND_CHECK_INTERVAL);
+}
+
+export function stopBackgroundMonitor(): void {
+  if (monitorInterval) {
+    console.log('Steam Status: Stopping background monitor');
+    clearInterval(monitorInterval);
+    monitorInterval = null;
+  }
+}
+
+// Export for UI components to check current outage state without re-notifying
+export function getCurrentOutageState(): boolean {
+  return lastKnownOutageState;
+}
+
+export function getNotificationSentState(): boolean {
+  return notificationSentForOutage;
+}
