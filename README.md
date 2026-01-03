@@ -4,6 +4,11 @@
 [![License](https://img.shields.io/github/license/bschelst/steamstatus-decky)](LICENSE)
 [![Decky Loader](https://img.shields.io/badge/Decky-Loader-blue)](https://github.com/SteamDeckHomebrew/decky-loader)
 
+# 🚧 WORK IN PROGRESS — CANNOT BE USED YET 🚧
+
+> **This project is under active development and is not functional or supported at this time.**
+
+
 Display **real-time Steam status**, player counts, and service health directly on your Steam Deck.
 
 <!-- TODO: Add screenshot -->
