@@ -7,12 +7,14 @@ import {
   Navigation,
   showModal,
 } from '@decky/ui';
+import { call } from '@decky/api';
 import {
   FaCog,
   FaArrowLeft,
   FaExclamationTriangle,
   FaQuestionCircle,
   FaGithub,
+  FaDownload,
 } from 'react-icons/fa';
 
 import { StatusPanel } from './StatusPanel';
@@ -20,10 +22,79 @@ import { Settings } from './Settings';
 import HelpModal from './HelpModal';
 import { useSteamStatus } from '../hooks/useSteamStatus';
 import { useOutageDetection, OutageInfo } from '../hooks/useOutageDetection';
-import { PLUGIN_VERSION } from '../constants';
+import { useLatestVersion } from '../hooks/useLatestVersion';
+import { useSettings } from '../hooks/useSettings';
 import useTranslations from '../hooks/useTranslations';
 
 const GITHUB_URL = 'https://github.com/bschelst/steamstatus-decky';
+const PLUGIN_UPDATE_URL = 'https://github.com/bschelst/steamstatus-decky/releases/latest/download/steamstatus-decky.zip';
+
+type UpdateStatus = 'idle' | 'checking' | 'downloading' | 'installing' | 'completed' | 'failed';
+
+// Check if a URL exists (file is available for download)
+async function checkUpdateFileExists(url: string): Promise<boolean> {
+  console.log('[SteamStatus] Checking if update file exists:', url);
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    console.log('[SteamStatus] HEAD request status:', response.status);
+    return response.ok;
+  } catch (e) {
+    console.error('[SteamStatus] HEAD request failed:', e);
+    return false;
+  }
+}
+
+// Install plugin from URL using Decky's internal API
+async function installPluginUpdate(
+  url: string,
+  onStatusChange: (status: UpdateStatus) => void
+): Promise<void> {
+  console.log('[SteamStatus] Starting plugin update...');
+  console.log('[SteamStatus] Update URL:', url);
+
+  // First check if the file exists
+  onStatusChange('checking');
+  const fileExists = await checkUpdateFileExists(url);
+  if (!fileExists) {
+    console.error('[SteamStatus] Update file does not exist at URL:', url);
+    throw new Error('Update file not found');
+  }
+  console.log('[SteamStatus] Update file exists, proceeding with download...');
+
+  // Start downloading
+  onStatusChange('downloading');
+
+  // Try using Decky's internal plugin loader API
+  const DeckyPluginLoader = (window as any).DeckyPluginLoader;
+  console.log('[SteamStatus] DeckyPluginLoader available:', !!DeckyPluginLoader);
+  console.log('[SteamStatus] DeckyPluginLoader.installPlugin available:', !!DeckyPluginLoader?.installPlugin);
+
+  if (DeckyPluginLoader?.installPlugin) {
+    console.log('[SteamStatus] Using DeckyPluginLoader.installPlugin()...');
+    try {
+      onStatusChange('installing');
+      const result = await DeckyPluginLoader.installPlugin(url);
+      console.log('[SteamStatus] installPlugin result:', result);
+      onStatusChange('completed');
+      return;
+    } catch (e) {
+      console.error('[SteamStatus] DeckyPluginLoader.installPlugin failed:', e);
+      throw e;
+    }
+  }
+
+  // Fallback: try calling the backend route
+  console.log('[SteamStatus] Falling back to call("install_plugin")...');
+  try {
+    onStatusChange('installing');
+    const result = await call<[string], void>('install_plugin', url);
+    console.log('[SteamStatus] call("install_plugin") result:', result);
+    onStatusChange('completed');
+  } catch (e) {
+    console.error('[SteamStatus] call("install_plugin") failed:', e);
+    throw e;
+  }
+}
 
 const formatOutageTime = (timestamp: string | null, unknownText: string) => {
   if (!timestamp) return unknownText;
@@ -148,15 +219,87 @@ const LinksSection: React.FC = () => {
   );
 };
 
+const getUpdateStatusText = (status: UpdateStatus, t: ReturnType<typeof useTranslations>): string => {
+  switch (status) {
+    case 'checking': return t('updateChecking') || 'Checking...';
+    case 'downloading': return t('updateDownloading') || 'Downloading...';
+    case 'installing': return t('updateInstalling') || 'Installing...';
+    case 'completed': return t('updateCompleted') || 'Completed!';
+    case 'failed': return t('updateFailed') || 'Update failed';
+    default: return '';
+  }
+};
+
 const AboutSection: React.FC = () => {
   const t = useTranslations();
+  const [settings] = useSettings();
+  const { currentVersion, latestVersion, isLoading, updateAvailable } = useLatestVersion(
+    settings.check_for_updates
+  );
+  const [updateStatus, setUpdateStatus] = useState<UpdateStatus>('idle');
+  const [updateError, setUpdateError] = useState<string | null>(null);
+
+  const isUpdating = updateStatus !== 'idle' && updateStatus !== 'completed' && updateStatus !== 'failed';
+
+  const handleUpdate = async () => {
+    console.log('[SteamStatus] Update button clicked');
+    console.log('[SteamStatus] Current version:', currentVersion);
+    console.log('[SteamStatus] Latest version:', latestVersion);
+    setUpdateStatus('checking');
+    setUpdateError(null);
+    try {
+      await installPluginUpdate(PLUGIN_UPDATE_URL, setUpdateStatus);
+      console.log('[SteamStatus] Update completed successfully');
+    } catch (e) {
+      console.error('[SteamStatus] Failed to update plugin:', e);
+      setUpdateStatus('failed');
+      setUpdateError(e instanceof Error ? e.message : 'Update failed');
+      console.log('[SteamStatus] Opening GitHub releases page as fallback...');
+      Navigation.NavigateToExternalWeb(GITHUB_URL + '/releases/latest');
+    } finally {
+      console.log('[SteamStatus] Update process finished');
+    }
+  };
+
   return (
     <PanelSection title={t('about')}>
       <PanelSectionRow>
         <Field label={t('version')} bottomSeparator="none">
-          {PLUGIN_VERSION}
+          {currentVersion}
         </Field>
       </PanelSectionRow>
+      {settings.check_for_updates && (
+        <PanelSectionRow>
+          <Field label={t('latestVersion')} bottomSeparator="none">
+            {isLoading ? '...' : latestVersion || '?'}
+          </Field>
+        </PanelSectionRow>
+      )}
+      {settings.check_for_updates && (updateAvailable || updateStatus !== 'idle') && (
+        <PanelSectionRow>
+          <ButtonItem
+            layout="below"
+            onClick={handleUpdate}
+            disabled={isUpdating}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <FaDownload size={14} />
+              <span>
+                {isUpdating
+                  ? getUpdateStatusText(updateStatus, t)
+                  : updateStatus === 'failed'
+                    ? t('updateFailed') || 'Update failed - Retry?'
+                    : t('updateToVersion', { version: latestVersion })}
+              </span>
+            </div>
+          </ButtonItem>
+        </PanelSectionRow>
+      )}
+      {updateError && (
+        <PanelSectionRow>
+          <div style={{ fontSize: '11px', color: '#f44336' }}>{updateError}</div>
+        </PanelSectionRow>
+      )}
     </PanelSection>
   );
 };

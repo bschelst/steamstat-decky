@@ -8,6 +8,8 @@ import {
   FaBell,
   FaServer,
   FaInfoCircle,
+  FaGamepad,
+  FaDownload,
 } from 'react-icons/fa';
 import useTranslations from '../hooks/useTranslations';
 
@@ -299,7 +301,7 @@ const HelpModal: FC<HelpModalProps> = ({ closeModal }) => {
                 </p>
               </div>
 
-              <div>
+              <div style={{ marginBottom: '16px' }}>
                 <div
                   style={{
                     display: 'flex',
@@ -313,6 +315,40 @@ const HelpModal: FC<HelpModalProps> = ({ closeModal }) => {
                 </div>
                 <p style={{ lineHeight: '1.5', marginLeft: '22px' }}>
                   {t('offlineModeDesc')}
+                </p>
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '4px',
+                  }}
+                >
+                  <FaGamepad size={14} />
+                  <strong>{t('trendingGamesFeature')}</strong>
+                </div>
+                <p style={{ lineHeight: '1.5', marginLeft: '22px' }}>
+                  {t('trendingGamesFeatureDesc')}
+                </p>
+              </div>
+
+              <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '4px',
+                  }}
+                >
+                  <FaDownload size={14} />
+                  <strong>{t('autoUpdateFeature')}</strong>
+                </div>
+                <p style={{ lineHeight: '1.5', marginLeft: '22px' }}>
+                  {t('autoUpdateFeatureDesc')}
                 </p>
               </div>
             </HelpSection>

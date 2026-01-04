@@ -56,6 +56,8 @@ export interface PluginSettings {
   refresh_interval_seconds: number;
   show_history: boolean;
   enable_notifications: boolean;
+  show_trending_games: boolean;
+  check_for_updates: boolean;
 }
 
 export interface CachedStatus {

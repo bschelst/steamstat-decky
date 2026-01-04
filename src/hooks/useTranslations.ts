@@ -17,14 +17,27 @@ function getCurrentLanguage(): keyof typeof languages {
 function useTranslations() {
   const [lang] = useState(getCurrentLanguage());
 
-  return function (key: keyof (typeof languages)['en']): string {
+  return function (
+    key: keyof (typeof languages)['en'],
+    params?: Record<string, string | number | null>
+  ): string {
+    let text: string;
     if (languages[lang]?.[key]?.length) {
-      return languages[lang]?.[key];
+      text = languages[lang]?.[key];
     } else if (languages.en?.[key]?.length) {
-      return languages.en?.[key];
+      text = languages.en?.[key];
     } else {
-      return key;
+      text = key;
     }
+
+    // Replace template variables like {{version}} with values from params
+    if (params) {
+      Object.entries(params).forEach(([paramKey, value]) => {
+        text = text.replace(new RegExp(`\\{\\{${paramKey}\\}\\}`, 'g'), String(value ?? ''));
+      });
+    }
+
+    return text;
   };
 }
 

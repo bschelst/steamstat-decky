@@ -26,10 +26,13 @@ export function useOutageDetection(status: SteamStatus | null): OutageInfo {
       (svc) => svc.status !== 'online'
     );
 
-    // Check history for outages in the last hour
-    const recentOutages = status.history?.filter(
-      (entry: HistoryEntry) => !entry.all_services_up
-    ) || [];
+    // Check history for outages in the last hour only
+    const oneHourAgo = Date.now() - 60 * 60 * 1000;
+    const recentOutages = status.history?.filter((entry: HistoryEntry) => {
+      if (entry.all_services_up) return false;
+      const entryTime = new Date(entry.timestamp).getTime();
+      return entryTime >= oneHourAgo;
+    }) || [];
     const hadRecentOutage = recentOutages.length > 0;
     const lastOutage = recentOutages.length > 0 ? recentOutages[recentOutages.length - 1] : null;
 

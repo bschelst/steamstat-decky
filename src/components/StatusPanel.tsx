@@ -152,7 +152,7 @@ export const StatusPanel: React.FC<StatusPanelProps> = ({
 
 
       {/* Trending Games */}
-      {status.trending_games && status.trending_games.length > 0 && (
+      {settings.show_trending_games && status.trending_games && status.trending_games.length > 0 && (
         <TrendingGamesPanel games={status.trending_games} />
       )}
 

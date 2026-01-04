@@ -1,4 +1,4 @@
-export const PLUGIN_VERSION = '1.0.0';
+export const PLUGIN_VERSION = '0.0.1';
 
 export const DEFAULT_SETTINGS = {
   gateway_url: 'https://bschelst-thinkpad-p70.grolar-tiyanki.ts.net:18888',
@@ -7,6 +7,8 @@ export const DEFAULT_SETTINGS = {
   refresh_interval_seconds: 180,
   show_history: true,
   enable_notifications: true,
+  show_trending_games: true,
+  check_for_updates: true,
 };
 
 export const STATUS_COLORS = {
