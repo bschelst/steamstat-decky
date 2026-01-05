@@ -1,9 +1,8 @@
 # Steam Status
 
 <!-- Core status -->
-[![Version](https://img.shields.io/github/v/release/bschelst/steamstatus-decky?label=version&color=1b2838)](https://github.com/bschelst/steamstatus-decky/releases)
 [![Latest Release](https://img.shields.io/github/v/release/bschelst/steamstatus-decky?label=version&color=1b2838)](https://github.com/bschelst/steamstatus-decky/releases)
-[![Downloads](https://img.shields.io/github/downloads/bschelst/steamstatus-decky/latest/total?color=66c0f4)](https://github.com/bschelst/steamstatus-decky/releases)
+<!--[![Downloads](https://img.shields.io/github/downloads/bschelst/steamstatus-decky/latest/total?color=66c0f4)](https://github.com/bschelst/steamstatus-decky/releases) -->
 [![License](https://img.shields.io/github/license/bschelst/steamstatus-decky?color=4c9ed9)](LICENSE)
 
 <!-- Platform -->
