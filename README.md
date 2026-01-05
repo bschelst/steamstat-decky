@@ -1,11 +1,10 @@
 # Steam Status
 
 <!-- Core status -->
-[![Latest Release](https://img.shields.io/github/v/release/bschelst/steamstatus-decky?label=version&color=1b2838)](https://github.com/bschelst/steamstatus-decky/releases)
 <!--[![Downloads](https://img.shields.io/github/downloads/bschelst/steamstatus-decky/latest/total?color=66c0f4)](https://github.com/bschelst/steamstatus-decky/releases) -->
-[![License](https://img.shields.io/github/license/bschelst/steamstatus-decky?color=4c9ed9)](LICENSE)
-
 <!-- Platform -->
+[![Latest Release](https://img.shields.io/github/v/release/bschelst/steamstatus-decky?label=version&color=1b2838)](https://github.com/bschelst/steamstatus-decky/releases)
+[![License](https://img.shields.io/github/license/bschelst/steamstatus-decky?color=4c9ed9)](LICENSE)
 [![Decky Loader](https://img.shields.io/badge/Decky-Loader-4c9ed9)](https://github.com/SteamDeckHomebrew/decky-loader)
 ![Steam Deck](https://img.shields.io/badge/Steam-Deck-1b2838?logo=steam&logoColor=white)
 
@@ -14,7 +13,7 @@
 
 
 Display **real-time Steam status**, player counts, and Steam service health directly on your lovely Steam Deck.
-This is getting information from official Steam APIs, and also of ProtonDB. (for Trending Games).
+This is getting information from official Steam APIs, and also from ProtonDB. (for Trending Games).
 
 
 ---
