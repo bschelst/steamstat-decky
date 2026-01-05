@@ -1,8 +1,8 @@
 export const PLUGIN_VERSION = '1.0.0';
 
 export const DEFAULT_SETTINGS = {
-  gateway_url: 'https://bschelst-thinkpad-p70.grolar-tiyanki.ts.net:18888',
-  gateway_api_key: 'bart',
+  gateway_url: 'https://steamstatus.schelstraete.org',
+  gateway_api_key: 'A7f9K2mQ8R3D6T1ZJ5W0H4CNYVXEP9',
   status_page_url: 'https://store.steampowered.com/charts',
   refresh_interval_seconds: 180,
   show_history: true,
