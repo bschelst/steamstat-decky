@@ -60,6 +60,8 @@
   "notifications": "Thông báo",
   "enableNotifications": "Bật thông báo",
   "enableNotificationsDesc": "Hiển thị thông báo khi dịch vụ Steam ngừng hoạt động hoặc phục hồi",
+  "enableNotificationAntiflood": "Bật bảo vệ chống lụt",
+  "enableNotificationAntifloodDesc": "Giới hạn thông báo xuống 10 mỗi 3 phút để ngăn spam",
 
   "helpTitle": "Trợ giúp Steam Status",
   "close": "Đóng",

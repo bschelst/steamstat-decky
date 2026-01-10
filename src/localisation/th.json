@@ -60,6 +60,8 @@
   "notifications": "การแจ้งเตือน",
   "enableNotifications": "เปิดใช้งานการแจ้งเตือน",
   "enableNotificationsDesc": "แสดงการแจ้งเตือนเมื่อบริการ Steam หยุดทำงานหรือกู้คืน",
+  "enableNotificationAntiflood": "เปิดใช้งานการป้องกันการท่วมท้น",
+  "enableNotificationAntifloodDesc": "จำกัดการแจ้งเตือนเป็น 10 ครั้งต่อ 3 นาทีเพื่อป้องกันสแปม",
 
   "helpTitle": "ความช่วยเหลือ Steam Status",
   "close": "ปิด",

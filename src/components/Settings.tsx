@@ -75,6 +75,16 @@ export const Settings: React.FC = () => {
             onChange={(value) => updateSetting('enable_notifications', value)}
           />
         </PanelSectionRow>
+
+        <PanelSectionRow>
+          <ToggleField
+            label={t('enableNotificationAntiflood')}
+            description={t('enableNotificationAntifloodDesc')}
+            checked={settings.enable_notification_antiflood}
+            onChange={(value) => updateSetting('enable_notification_antiflood', value)}
+            disabled={!settings.enable_notifications}
+          />
+        </PanelSectionRow>
       </PanelSection>
     </>
   );

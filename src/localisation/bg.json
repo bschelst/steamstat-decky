@@ -60,6 +60,8 @@
   "notifications": "Известия",
   "enableNotifications": "Включи известията",
   "enableNotificationsDesc": "Покажи известия когато услугите на Steam спрат или се възстановят",
+  "enableNotificationAntiflood": "Активирай защита от наводнение",
+  "enableNotificationAntifloodDesc": "Ограничи известията до 10 на 3 минути за предотвратяване на спам",
 
   "helpTitle": "Помощ за Steam Status",
   "close": "Затвори",

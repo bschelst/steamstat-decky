@@ -60,6 +60,8 @@
   "notifications": "الإشعارات",
   "enableNotifications": "تفعيل الإشعارات",
   "enableNotificationsDesc": "عرض إشعارات عند تعطل خدمات Steam أو استعادتها",
+  "enableNotificationAntiflood": "تفعيل الحماية من الفيضان",
+  "enableNotificationAntifloodDesc": "حدد الإشعارات إلى 10 كل 3 دقائق لمنع البريد العشوائي",
 
   "helpTitle": "مساعدة Steam Status",
   "close": "إغلاق",

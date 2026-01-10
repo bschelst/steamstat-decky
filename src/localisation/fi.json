@@ -60,6 +60,8 @@
   "notifications": "Ilmoitukset",
   "enableNotifications": "Ota ilmoitukset käyttöön",
   "enableNotificationsDesc": "Näytä ilmoitukset kun Steam-palvelut kaatuvat tai palautuvat",
+  "enableNotificationAntiflood": "Ota käyttöön anti-flood-suojaus",
+  "enableNotificationAntifloodDesc": "Rajoita ilmoitukset 10:een 3 minuutissa roskapostin estämiseksi",
 
   "helpTitle": "Steam Status Ohje",
   "close": "Sulje",

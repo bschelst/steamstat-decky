@@ -60,6 +60,8 @@
   "notifications": "알림",
   "enableNotifications": "알림 활성화",
   "enableNotificationsDesc": "Steam 서비스 장애 또는 복구 시 알림 표시",
+  "enableNotificationAntiflood": "Anti-Flood 보호 활성화",
+  "enableNotificationAntifloodDesc": "스팸 방지를 위해 3분당 10개로 알림 제한",
 
   "helpTitle": "Steam Status 도움말",
   "close": "닫기",

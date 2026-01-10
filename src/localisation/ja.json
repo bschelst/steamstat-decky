@@ -60,6 +60,8 @@
   "notifications": "通知",
   "enableNotifications": "通知を有効化",
   "enableNotificationsDesc": "Steamサービスの障害や復旧時に通知を表示",
+  "enableNotificationAntiflood": "アンチフラッド保護を有効化",
+  "enableNotificationAntifloodDesc": "スパムを防ぐため通知を3分間に10件に制限",
 
   "helpTitle": "Steam Statusヘルプ",
   "close": "閉じる",

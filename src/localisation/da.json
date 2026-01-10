@@ -60,6 +60,8 @@
   "notifications": "Notifikationer",
   "enableNotifications": "Aktiver notifikationer",
   "enableNotificationsDesc": "Vis notifikationer når Steam-tjenester går ned eller genoprettes",
+  "enableNotificationAntiflood": "Aktiver anti-flood-beskyttelse",
+  "enableNotificationAntifloodDesc": "Begræns notifikationer til 10 pr. 3 minutter for at forhindre spam",
 
   "helpTitle": "Steam Status Hjælp",
   "close": "Luk",

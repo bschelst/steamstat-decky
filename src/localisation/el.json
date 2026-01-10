@@ -60,6 +60,8 @@
   "notifications": "Ειδοποιήσεις",
   "enableNotifications": "Ενεργοποίηση ειδοποιήσεων",
   "enableNotificationsDesc": "Εμφάνιση ειδοποιήσεων όταν οι υπηρεσίες Steam πέφτουν ή ανακάμπτουν",
+  "enableNotificationAntiflood": "Ενεργοποίηση προστασίας anti-flood",
+  "enableNotificationAntifloodDesc": "Περιορισμός ειδοποιήσεων σε 10 ανά 3 λεπτά για αποφυγή spam",
 
   "helpTitle": "Βοήθεια Steam Status",
   "close": "Κλείσιμο",

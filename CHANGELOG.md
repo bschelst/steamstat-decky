@@ -3,6 +3,11 @@
 All important changes are mentioned here.
 
 
+## [1.2.0] - 2026-01-10
+
+### Added
+- **Notification anti-flood protection**: Configurable rate limiting prevents notification spam during gateway or API issues. Users can enable or disable this feature in settings (enabled by default).
+
 ## [1.1.0] - 2026-01-09
 
 ### Added
@@ -41,5 +46,6 @@ All important changes are mentioned here.
 - Gateway-based architecture for efficient data fetching
 - Decky Loader plugin interface
 
+[1.2.0]: https://github.com/bschelst/steamstatus-decky/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/bschelst/steamstatus-decky/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/bschelst/steamstatus-decky/releases/tag/v1.0.0

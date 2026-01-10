@@ -60,6 +60,8 @@
   "notifications": "Értesítések",
   "enableNotifications": "Értesítések engedélyezése",
   "enableNotificationsDesc": "Értesítések megjelenítése, amikor a Steam szolgáltatások leállnak vagy helyreállnak",
+  "enableNotificationAntiflood": "Anti-flood védelem bekapcsolása",
+  "enableNotificationAntifloodDesc": "Értesítések korlátozása 10-re 3 percenként a spam megelőzése érdekében",
 
   "helpTitle": "Steam Status Súgó",
   "close": "Bezárás",

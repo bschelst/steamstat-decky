@@ -9,10 +9,48 @@ let monitorInterval: ReturnType<typeof setInterval> | null = null;
 let lastKnownOutageState = false;
 let notificationSentForOutage = false;
 
+// Anti-flood mechanism: Track notification timestamps
+const notificationHistory: number[] = [];
+const ANTIFLOOD_MAX_NOTIFICATIONS = 10;
+const ANTIFLOOD_TIME_WINDOW = 3 * 60 * 1000; // 3 minutes in milliseconds
+
 // Shared state that UI components can read
 export let lastFetchedStatus: SteamStatus | null = null;
 export let lastFetchTime: number | null = null;
 export let lastFetchError: string | null = null;
+
+/**
+ * Check if we should rate-limit notifications to prevent spam
+ * @param enableAntiflood - Whether anti-flood protection is enabled
+ * @returns true if notification should be blocked, false if it can be sent
+ */
+function shouldRateLimitNotification(enableAntiflood: boolean): boolean {
+  if (!enableAntiflood) {
+    return false; // Anti-flood disabled, don't rate limit
+  }
+
+  const now = Date.now();
+
+  // Remove old timestamps outside the time window
+  while (notificationHistory.length > 0 && notificationHistory[0] < now - ANTIFLOOD_TIME_WINDOW) {
+    notificationHistory.shift();
+  }
+
+  // Check if we've hit the limit
+  if (notificationHistory.length >= ANTIFLOOD_MAX_NOTIFICATIONS) {
+    console.log('[SteamStatus] Anti-flood: Notification rate limit reached. Blocking notification.');
+    return true; // Block notification
+  }
+
+  return false; // Allow notification
+}
+
+/**
+ * Record that a notification was sent (for anti-flood tracking)
+ */
+function recordNotification(): void {
+  notificationHistory.push(Date.now());
+}
 
 async function fetchStatus(): Promise<SteamStatus | null> {
   // Load settings from localStorage
@@ -49,7 +87,7 @@ async function fetchStatus(): Promise<SteamStatus | null> {
   }
 }
 
-function checkForOutageAndNotify(status: SteamStatus, enableNotifications: boolean): void {
+function checkForOutageAndNotify(status: SteamStatus, enableNotifications: boolean, enableAntiflood: boolean): void {
   const currentServicesDown = Object.values(status.services).some(
     (svc) => svc.status !== 'online'
   );
@@ -60,36 +98,50 @@ function checkForOutageAndNotify(status: SteamStatus, enableNotifications: boole
 
   // Send notification for new outage
   if (outageJustStarted && !notificationSentForOutage && enableNotifications) {
-    notificationSentForOutage = true;
+    // Check anti-flood rate limit
+    if (shouldRateLimitNotification(enableAntiflood)) {
+      console.log('[SteamStatus] Outage notification blocked by anti-flood protection');
+    } else {
+      notificationSentForOutage = true;
 
-    const affectedServices = Object.entries(status.services)
-      .filter(([, svc]) => svc.status !== 'online')
-      .map(([name]) => name)
-      .join(', ');
+      const affectedServices = Object.entries(status.services)
+        .filter(([, svc]) => svc.status !== 'online')
+        .map(([name]) => name)
+        .join(', ');
 
-    toaster.toast({
-      title: 'Steam Service Outage',
-      body: `Services affected: ${affectedServices}`,
-      icon: React.createElement(FaExclamationTriangle, { color: '#ff9800' }),
-      duration: 8000,
-      critical: true,
-      playSound: true,
-      showToast: true,
-    });
+      toaster.toast({
+        title: 'Steam Service Outage',
+        body: `Services affected: ${affectedServices}`,
+        icon: React.createElement(FaExclamationTriangle, { color: '#ff9800' }),
+        duration: 8000,
+        critical: true,
+        playSound: true,
+        showToast: true,
+      });
+
+      recordNotification();
+    }
   }
 
   // Send recovery notification
   if (outageJustEnded && enableNotifications) {
-    notificationSentForOutage = false;
+    // Check anti-flood rate limit
+    if (shouldRateLimitNotification(enableAntiflood)) {
+      console.log('[SteamStatus] Recovery notification blocked by anti-flood protection');
+    } else {
+      notificationSentForOutage = false;
 
-    toaster.toast({
-      title: 'Steam Services Restored',
-      body: 'All Steam services are now online',
-      icon: React.createElement(FaExclamationTriangle, { color: '#4caf50' }),
-      duration: 5000,
-      playSound: true,
-      showToast: true,
-    });
+      toaster.toast({
+        title: 'Steam Services Restored',
+        body: 'All Steam services are now online',
+        icon: React.createElement(FaExclamationTriangle, { color: '#4caf50' }),
+        duration: 5000,
+        playSound: true,
+        showToast: true,
+      });
+
+      recordNotification();
+    }
   }
 
   // Update last known state
@@ -102,7 +154,7 @@ async function monitorTick(): Promise<void> {
 
   const status = await fetchStatus();
   if (status) {
-    checkForOutageAndNotify(status, settings.enable_notifications);
+    checkForOutageAndNotify(status, settings.enable_notifications, settings.enable_notification_antiflood);
   }
 }
 

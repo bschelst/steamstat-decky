@@ -60,6 +60,8 @@
   "notifications": "Varsler",
   "enableNotifications": "Aktiver varsler",
   "enableNotificationsDesc": "Vis varsler når Steam-tjenester går ned eller gjenopprettes",
+  "enableNotificationAntiflood": "Aktiver anti-flood-beskyttelse",
+  "enableNotificationAntifloodDesc": "Begrens varsler til 10 per 3 minutter for å forhindre spam",
 
   "helpTitle": "Steam Status Hjelp",
   "close": "Lukk",

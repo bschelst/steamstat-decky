@@ -60,6 +60,8 @@
   "notifications": "Bildirimler",
   "enableNotifications": "Bildirimleri etkinleştir",
   "enableNotificationsDesc": "Steam servisleri çöktüğünde veya düzeldiğinde bildirim göster",
+  "enableNotificationAntiflood": "Anti-Flood korumasını etkinleştir",
+  "enableNotificationAntifloodDesc": "Spam'i önlemek için bildirimleri 3 dakikada 10 ile sınırla",
 
   "helpTitle": "Steam Status Yardımı",
   "close": "Kapat",

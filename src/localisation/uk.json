@@ -60,6 +60,8 @@
   "notifications": "Сповіщення",
   "enableNotifications": "Увімкнути сповіщення",
   "enableNotificationsDesc": "Показувати сповіщення при збоях або відновленні сервісів Steam",
+  "enableNotificationAntiflood": "Увімкнути захист від флуду",
+  "enableNotificationAntifloodDesc": "Обмежити сповіщення до 10 за 3 хвилини для запобігання спаму",
 
   "helpTitle": "Довідка Steam Status",
   "close": "Закрити",

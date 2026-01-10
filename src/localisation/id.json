@@ -60,6 +60,8 @@
   "notifications": "Notifikasi",
   "enableNotifications": "Aktifkan notifikasi",
   "enableNotificationsDesc": "Tampilkan notifikasi saat layanan Steam down atau pulih",
+  "enableNotificationAntiflood": "Aktifkan perlindungan anti-flood",
+  "enableNotificationAntifloodDesc": "Batasi notifikasi menjadi 10 per 3 menit untuk mencegah spam",
 
   "helpTitle": "Bantuan Steam Status",
   "close": "Tutup",

@@ -60,6 +60,8 @@
   "notifications": "Oznámení",
   "enableNotifications": "Povolit oznámení",
   "enableNotificationsDesc": "Zobrazit oznámení, když služby Steam vypadnou nebo se obnoví",
+  "enableNotificationAntiflood": "Povolit ochranu proti zahlcení",
+  "enableNotificationAntifloodDesc": "Omezit oznámení na 10 za 3 minuty pro zabránění spamu",
 
   "helpTitle": "Nápověda Steam Status",
   "close": "Zavřít",

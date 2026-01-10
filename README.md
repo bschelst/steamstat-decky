@@ -49,6 +49,7 @@ This led me to realize that it would be (for me) highly beneficial to receive cl
 - **Regional status**: Expandable view of Steam servers by region (US East, US West, EU West, EU East, Asia)
 - **Trending games**: Top 5 Deck-verified games currently gaining players
 - **Outage notifications**: Get notified when Steam services go down or recover
+- **Anti-flood protection**: Prevents notification spam during gateway or API issues
 - **Configurable refresh interval**: Set automatic refresh from 3-10 minutes, or manual only
 - **Status page link**: Quick access to external status page (default: https://store.steampowered.com/charts/)
 - **Offline mode**: Displays cached data when the network is unavailable

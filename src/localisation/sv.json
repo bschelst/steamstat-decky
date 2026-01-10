@@ -60,6 +60,8 @@
   "notifications": "Aviseringar",
   "enableNotifications": "Aktivera aviseringar",
   "enableNotificationsDesc": "Visa aviseringar när Steam-tjänster går ner eller återställs",
+  "enableNotificationAntiflood": "Aktivera anti-flood-skydd",
+  "enableNotificationAntifloodDesc": "Begränsa notifikationer till 10 per 3 minuter för att förhindra spam",
 
   "helpTitle": "Steam Status Hjälp",
   "close": "Stäng",

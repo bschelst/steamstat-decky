@@ -1,4 +1,4 @@
-export const PLUGIN_VERSION = '1.1.0';
+export const PLUGIN_VERSION = '1.2.0';
 
 export const STATUS_PAGE_URL = 'https://steamstatus.schelstraete.org/status';
 
@@ -8,6 +8,7 @@ export const DEFAULT_SETTINGS = {
   refresh_interval_seconds: 300,
   show_history: true,
   enable_notifications: true,
+  enable_notification_antiflood: true,
   show_trending_games: true,
   check_for_updates: true,
 };

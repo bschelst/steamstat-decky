@@ -54,6 +54,8 @@
   "notifications": "Meldingen",
   "enableNotifications": "Meldingen inschakelen",
   "enableNotificationsDesc": "Toon meldingen wanneer Steam-services uitvallen of herstellen",
+  "enableNotificationAntiflood": "Anti-Flood Bescherming Inschakelen",
+  "enableNotificationAntifloodDesc": "Limiteer meldingen tot 10 per 3 minuten om spam te voorkomen",
   "helpTitle": "Steam Status Help",
   "close": "Sluiten",
   "jumpToSection": "Ga naar sectie",

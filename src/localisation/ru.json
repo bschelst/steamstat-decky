@@ -60,6 +60,8 @@
   "notifications": "Уведомления",
   "enableNotifications": "Включить уведомления",
   "enableNotificationsDesc": "Показывать уведомления при сбоях или восстановлении сервисов Steam",
+  "enableNotificationAntiflood": "Включить защиту от флуда",
+  "enableNotificationAntifloodDesc": "Ограничить уведомления до 10 в 3 минуты для предотвращения спама",
 
   "helpTitle": "Справка Steam Status",
   "close": "Закрыть",

@@ -60,6 +60,8 @@
   "notifications": "通知",
   "enableNotifications": "启用通知",
   "enableNotificationsDesc": "当 Steam 服务中断或恢复时显示通知",
+  "enableNotificationAntiflood": "启用防洪保护",
+  "enableNotificationAntifloodDesc": "限制通知为每3分钟10条以防止垃圾信息",
 
   "helpTitle": "Steam Status 帮助",
   "close": "关闭",

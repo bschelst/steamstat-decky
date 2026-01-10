@@ -60,6 +60,8 @@
   "notifications": "Notificări",
   "enableNotifications": "Activează notificările",
   "enableNotificationsDesc": "Afișează notificări când serviciile Steam cad sau se recuperează",
+  "enableNotificationAntiflood": "Activează protecția anti-flood",
+  "enableNotificationAntifloodDesc": "Limitează notificările la 10 la 3 minute pentru a preveni spam-ul",
 
   "helpTitle": "Ajutor Steam Status",
   "close": "Închide",

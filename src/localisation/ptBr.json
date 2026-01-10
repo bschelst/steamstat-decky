@@ -60,6 +60,8 @@
   "notifications": "Notificações",
   "enableNotifications": "Ativar notificações",
   "enableNotificationsDesc": "Mostrar notificações quando os serviços Steam ficam offline ou recuperam",
+  "enableNotificationAntiflood": "Ativar proteção anti-flood",
+  "enableNotificationAntifloodDesc": "Limitar notificações a 10 por 3 minutos para evitar spam",
 
   "helpTitle": "Ajuda Steam Status",
   "close": "Fechar",
