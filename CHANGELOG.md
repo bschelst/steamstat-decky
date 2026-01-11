@@ -3,6 +3,11 @@
 All important changes are mentioned here.
 
 
+## [1.2.2] - 2026-01-11
+
+### Security
+- **API key redaction in console logs**: Gateway API key is now redacted in all console.log output, displaying as `***REDACTED***` instead of the actual key. The key is still used normally for API requests but is no longer visible in browser developer console logs.
+
 ## [1.2.1] - 2026-01-11
 
 ### Added
@@ -60,6 +65,7 @@ All important changes are mentioned here.
 - Gateway-based architecture for efficient data fetching
 - Decky Loader plugin interface
 
+[1.2.2]: https://github.com/bschelst/steamstatus-decky/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/bschelst/steamstatus-decky/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/bschelst/steamstatus-decky/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/bschelst/steamstatus-decky/compare/v1.0.0...v1.1.0

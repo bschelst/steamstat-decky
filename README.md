@@ -34,7 +34,7 @@ The gateway server also has a status page, which can be viewed.
 
 ---
 
-## 💡 What did I create this
+## 💡 Why did I create this
 
 In December 2025, we experienced several Steam service outages. During my active gaming session, issues were occuring in-game, without any clear indication that Steam itself was experiencing problems.
 At the time, we didn't know whether these disruptions were caused by local issues or by a broader Steam service outage. (You know how it goes..."would a reboot resolve our issues").

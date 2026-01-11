@@ -156,17 +156,23 @@ const formatOutageTime = (timestamp: string | null, unknownText: string) => {
 const ServiceStatusSection: React.FC<{ outageInfo: OutageInfo }> = ({ outageInfo }) => {
   const t = useTranslations();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div style={{ marginTop: '8px' }}>
       <Focusable
         onActivate={() => setIsExpanded(!isExpanded)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px 0',
+          padding: '8px',
           cursor: 'pointer',
+          borderRadius: '4px',
+          background: isFocused ? 'rgba(139, 195, 74, 0.1)' : 'transparent',
+          transition: 'background 0.2s ease',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -266,6 +272,7 @@ const ServiceStatusSection: React.FC<{ outageInfo: OutageInfo }> = ({ outageInfo
 const DiagnosticsSection: React.FC = () => {
   const t = useTranslations();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
   const [latencyTesting, setLatencyTesting] = useState(false);
   const [latencyResult, setLatencyResult] = useState<string | null>(null);
   const [speedTesting, setSpeedTesting] = useState(false);
@@ -335,12 +342,17 @@ const DiagnosticsSection: React.FC = () => {
     <div style={{ marginTop: '8px' }}>
       <Focusable
         onActivate={() => setIsExpanded(!isExpanded)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px 0',
+          padding: '8px',
           cursor: 'pointer',
+          borderRadius: '4px',
+          background: isFocused ? 'rgba(139, 195, 74, 0.1)' : 'transparent',
+          transition: 'background 0.2s ease',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -418,17 +430,23 @@ const DiagnosticsSection: React.FC = () => {
 const LinksSection: React.FC = () => {
   const t = useTranslations();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div style={{ marginTop: '8px' }}>
       <Focusable
         onActivate={() => setIsExpanded(!isExpanded)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px 0',
+          padding: '8px',
           cursor: 'pointer',
+          borderRadius: '4px',
+          background: isFocused ? 'rgba(139, 195, 74, 0.1)' : 'transparent',
+          transition: 'background 0.2s ease',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -489,6 +507,7 @@ const AboutSection: React.FC = () => {
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>('idle');
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
   const isUpdating = updateStatus !== 'idle' && updateStatus !== 'completed' && updateStatus !== 'failed';
 
@@ -523,12 +542,17 @@ const AboutSection: React.FC = () => {
     <div style={{ marginTop: '8px' }}>
       <Focusable
         onActivate={() => setIsExpanded(!isExpanded)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px 0',
+          padding: '8px',
           cursor: 'pointer',
+          borderRadius: '4px',
+          background: isFocused ? 'rgba(139, 195, 74, 0.1)' : 'transparent',
+          transition: 'background 0.2s ease',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -598,17 +622,23 @@ const AboutSection: React.FC = () => {
 const SettingsSection: React.FC<{ onOpenSettings: () => void }> = ({ onOpenSettings }) => {
   const t = useTranslations();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div style={{ marginTop: '8px' }}>
       <Focusable
         onActivate={() => setIsExpanded(!isExpanded)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '8px 0',
+          padding: '8px',
           cursor: 'pointer',
+          borderRadius: '4px',
+          background: isFocused ? 'rgba(139, 195, 74, 0.1)' : 'transparent',
+          transition: 'background 0.2s ease',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -649,18 +679,24 @@ interface SteamStatusSectionProps {
 const SteamStatusSection: React.FC<SteamStatusSectionProps> = (props) => {
   const t = useTranslations();
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <>
       <div style={{ marginTop: '8px' }}>
         <Focusable
           onActivate={() => setIsExpanded(!isExpanded)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '8px 0',
+            padding: '8px',
             cursor: 'pointer',
+            borderRadius: '4px',
+            background: isFocused ? 'rgba(139, 195, 74, 0.1)' : 'transparent',
+            transition: 'background 0.2s ease',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

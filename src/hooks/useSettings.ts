@@ -6,11 +6,20 @@ import { PluginSettings } from '../../types/types';
 let cachedSettings: PluginSettings = { ...DEFAULT_SETTINGS };
 let settingsListeners: Set<(settings: PluginSettings) => void> = new Set();
 
+// Helper function to sanitize settings for logging (hide API key)
+function sanitizeSettingsForLog(settings: PluginSettings): any {
+  const sanitized = { ...settings };
+  if (sanitized.gateway_api_key && sanitized.gateway_api_key.length > 0) {
+    sanitized.gateway_api_key = '***REDACTED***';
+  }
+  return sanitized;
+}
+
 export function loadSettings(): Promise<PluginSettings> {
   console.log('[SteamStatus] loadSettings: Loading from Python backend...');
-  console.log('[SteamStatus] loadSettings: DEFAULT_SETTINGS =', DEFAULT_SETTINGS);
+  console.log('[SteamStatus] loadSettings: DEFAULT_SETTINGS =', sanitizeSettingsForLog(DEFAULT_SETTINGS));
   return call<[], PluginSettings>('get_settings').then((settings) => {
-    console.log('[SteamStatus] loadSettings: Python returned =', settings);
+    console.log('[SteamStatus] loadSettings: Python returned =', sanitizeSettingsForLog(settings));
     // Filter out empty string values from Python settings so they don't override frontend defaults
     const filteredSettings: Partial<PluginSettings> = {};
     for (const [key, value] of Object.entries(settings)) {
@@ -18,9 +27,9 @@ export function loadSettings(): Promise<PluginSettings> {
         filteredSettings[key as keyof PluginSettings] = value;
       }
     }
-    console.log('[SteamStatus] loadSettings: Filtered settings =', filteredSettings);
+    console.log('[SteamStatus] loadSettings: Filtered settings =', sanitizeSettingsForLog(filteredSettings as PluginSettings));
     cachedSettings = { ...DEFAULT_SETTINGS, ...filteredSettings };
-    console.log('[SteamStatus] loadSettings: Final cachedSettings =', cachedSettings);
+    console.log('[SteamStatus] loadSettings: Final cachedSettings =', sanitizeSettingsForLog(cachedSettings));
     notifyListeners();
     return cachedSettings;
   }).catch((e) => {
